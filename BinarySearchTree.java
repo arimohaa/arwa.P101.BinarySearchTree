@@ -1,3 +1,10 @@
+/*
+ * Author: Arwa Mohamud
+ * Email: mohamud4@wisc.edu
+ * Course: CS400, Fall 2026
+ * Assignment: P101.BSTs
+ */
+
 public class BinarySearchTree<T extends Comparable<T>> implements SortedCollection<T>{
     
     protected BinaryNode<T> root; // root node of the tree
@@ -183,4 +190,239 @@ public class BinarySearchTree<T extends Comparable<T>> implements SortedCollecti
         }
     }
 
+    /**
+     * ----- TESTER METHODS -----
+     */
+
+    /**
+     * Tests insertion of values in both integer and string trees!
+     * @return true if all tests pass!
+     */
+    public boolean test1(){
+
+        // integer tree tests 
+        BinarySearchTree<Integer> chainedIntegerTree = new BinarySearchTree<>(); 
+        chainedIntegerTree.add(1); 
+        chainedIntegerTree.add(2); 
+        chainedIntegerTree.add(3); 
+
+        BinarySearchTree<Integer> fullIntTree = new BinarySearchTree<>(); 
+        fullIntTree.add(2); 
+        fullIntTree.add(1); 
+        fullIntTree.add(3); 
+
+        // check for roots
+        if (chainedIntegerTree.root.getEntry().equals(1) == false) {
+            return false; 
+        }
+
+        if (fullIntTree.root.getEntry().equals(2) == false) {
+            return false; 
+        }
+
+        // chained tree should be right leaning 
+        if (chainedIntegerTree.root.downRight() == null) {
+            return false; 
+        }
+
+        if (chainedIntegerTree.root.downLeft() != null) {
+            return false; 
+        }
+
+        // full tree should have both left and right children 
+        if (fullIntTree.root.downLeft() == null || fullIntTree.root.downRight() == null) {
+            return false; 
+        }
+
+        // string tree tests 
+        BinarySearchTree<String> chainedStringTree = new BinarySearchTree<>();
+        chainedStringTree.add("a"); 
+        chainedStringTree.add("b"); 
+        chainedStringTree.add("c"); 
+
+        BinarySearchTree<String> fullStrTree = new BinarySearchTree<>(); 
+        fullStrTree.add("b"); 
+        fullStrTree.add("a"); 
+        fullStrTree.add("c"); 
+
+        // root check
+        if (chainedStringTree.root.getEntry().equals("a") == false) {
+            return false; 
+        }
+
+        if (fullStrTree.root.getEntry().equals("b") == false) {
+            return false; 
+        }
+
+        // right chain check
+        if (chainedStringTree.root.downLeft() != null) {
+            return false; 
+        }
+
+        if (chainedStringTree.root.downRight() == null) {
+            return false; 
+        }
+
+        // balanced tree check 
+        if (fullStrTree.root.downLeft() == null || fullStrTree.root.downRight() == null) {
+            return false; 
+        }
+
+        return true; 
+    }
+
+    /**
+     * Tests if a tree contains certain values for both integer and string trees. 
+     * @return true if all tests pass!
+     */
+    public boolean test2(){
+        // integer tree tests 
+        BinarySearchTree<Integer> intTree = new BinarySearchTree<>(); 
+        intTree.add(5); 
+        intTree.add(2); 
+        intTree.add(10); 
+        intTree.add(1); 
+        intTree.add(3); 
+
+        if (!intTree.contains(5)) {
+            return false; 
+        }
+        
+        if (!intTree.contains(2)) {
+            return false; 
+        }
+        
+        if (!intTree.contains(10)) {
+            return false; 
+        }
+        
+        if (!intTree.contains(1)) {
+            return false; 
+        }
+        
+        if (!intTree.contains(3)) {
+            return false; 
+        }
+        
+        if (intTree.contains(4)) {
+            return false; 
+        }
+
+        // string tree tests
+        BinarySearchTree<String> strTree = new BinarySearchTree<>(); 
+        strTree.add("c"); 
+        strTree.add("a"); 
+        strTree.add("d"); 
+        strTree.add("b"); 
+        strTree.add("e"); 
+
+        if (!strTree.contains("c")) {
+            return false; 
+        }
+        
+        if (!strTree.contains("a")) {
+            return false; 
+        }
+        
+        if (!strTree.contains("d")) {
+            return false; 
+        }
+        
+        if (!strTree.contains("b")) {
+            return false; 
+        }
+
+        if (!strTree.contains("e")) {
+            return false; 
+        }
+
+        if(strTree.contains("z")){
+            return false; 
+        }
+
+        return true; 
+    }
+
+    /**
+     * Tester method for the size(), clear(), and isEmpty() methods. 
+     * @return true if all tests pass!
+     */
+    public boolean test3(){
+        // integer tree empty test
+        BinarySearchTree<Integer> intTree = new BinarySearchTree<>(); 
+        if (!intTree.isEmpty()) {
+            return false; 
+        }
+        
+        if (intTree.size() != 0) {
+            return false; 
+        }
+
+        // duplicates test
+        intTree.add(2); 
+        intTree.add(1); 
+        intTree.add(3); 
+        intTree.add(1); 
+        if (intTree.size() != 4) {
+            return false; 
+        }
+
+        // clear test
+        intTree.clear(); 
+        if (intTree.isEmpty() != true) {
+            return false; 
+        }
+
+        if (intTree.size() != 0) {
+            return false; 
+        }
+
+        if (intTree.root != null) {
+            return false; 
+        }
+
+        // linked list type BST test
+        BinarySearchTree<Integer> listTypeTree = new BinarySearchTree<>(); 
+        listTypeTree.add(1); 
+        listTypeTree.add(2); 
+        listTypeTree.add(3); 
+        listTypeTree.add(4); 
+        listTypeTree.add(5); 
+
+        if (listTypeTree.size() != 5) {
+            return false; 
+        }
+
+        listTypeTree.clear(); 
+        if (listTypeTree.size() != 0 || listTypeTree.isEmpty() != true) {
+            return false; 
+        }
+
+        // STRING TREE TESTS!
+        BinarySearchTree<String> strTree = new BinarySearchTree<>(); 
+        if (strTree.size() != 0) {
+            return false; 
+        }
+
+        // duplicates test
+        strTree.add("b"); 
+        strTree.add("a"); 
+        strTree.add("c"); 
+        strTree.add("a"); 
+
+        if (strTree.size() != 4) {
+            return false; 
+        }
+
+        strTree.clear(); 
+        if (strTree.isEmpty() != true) {
+            return false; 
+        }
+
+        if (strTree.size() != 0) {
+            return false; 
+        }
+
+        return true; 
+    }
 }
