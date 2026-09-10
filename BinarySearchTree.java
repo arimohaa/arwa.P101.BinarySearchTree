@@ -1,6 +1,6 @@
-public class BinarySearchTree<T extends Comparable<T>> implements SortedCollection{
+public class BinarySearchTree<T extends Comparable<T>> implements SortedCollection<T>{
     
-    protected BinaryNode root; // root node of the tree
+    protected BinaryNode<T> root; // root node of the tree
     
     public BinarySearchTree(){
         this.root = root; 
@@ -44,7 +44,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements SortedCollecti
         int rightCount = 0; 
 
         // first base case: is the actual root not there --> if so size is zero 
-        if (root == null) {
+        if (currentNode == null) {
             return 0; 
         }
 
@@ -78,7 +78,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements SortedCollecti
      *         and false otherwise
      */
     public boolean contains(Comparable<T> find){
-        return containsHelper(root, value);
+        return containsHelper(root, find);
     }
 
     /**
@@ -119,7 +119,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements SortedCollecti
         }
         
     }
-    
+
     /**
      * Inserts a new data value into the sorted collection.
      * @param data the new value being inserted
@@ -150,26 +150,26 @@ public class BinarySearchTree<T extends Comparable<T>> implements SortedCollecti
      */
     protected void addHelper(BinaryNode<T> newNode, BinaryNode<T> subtree) {
 
+        // base case
+        if (subtree == null) {
+            return; // quits the method, nothing gets added
+        }
+
         T newNodeValue = newNode.getEntry(); // the new node trying to add's value
         T currentNodeValue = subtree.getEntry(); // the current node's value 
 
         BinaryNode<T> leftChild = subtree.downLeft(); 
         BinaryNode<T> rightChild = subtree.downRight(); 
 
-        // base case
-        if (subtree == null) {
-            return; // quits the method, nothing gets added
-        }
-
         // left check 
-        if (newNodeValue.compareTo(currentValue) < 0) {
+        if (newNodeValue.compareTo(currentNodeValue) <= 0) {
             // check if left child of root is null
             if (subtree.downLeft() == null) {
                 subtree.setLeft(newNode); // new node is now left child 
                 newNode.setUp(subtree); // parent of new node is confirmed to be subtree
             } else {
                 // recurse down until left child is null 
-                addHelper(newNode, leftChild)
+                addHelper(newNode, leftChild);
             }
         } else {
             // right check 
