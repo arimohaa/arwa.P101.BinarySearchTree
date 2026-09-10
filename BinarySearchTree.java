@@ -2,7 +2,7 @@
  * Author: Arwa Mohamud
  * Email: mohamud4@wisc.edu
  * Course: CS400, Fall 2026
- * Assignment: P101.BSTs
+ * Assignment: P101.BinarySearchTree
  */
 
 public class BinarySearchTree<T extends Comparable<T>> implements SortedCollection<T>{
